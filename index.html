@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <style>
+        canvas {
+            background-color: rgb(0, 0, 0);
+        }
+    </style>
+</head>
+<body>
+    <canvas id="canvas"></canvas>
+    <script>
+        let canvas;
+        let context;
+        const baseY = 50;
+        const arrNumStartX = [50, 130, 210, 290];
+        const arrLines = [
+            [0, 50, 0, 0],
+            [0, 0, 0, 50],
+            [50, 0, 0, 50],
+            [0, 50, 50, 50],
+            [0, 0, 50, 100],
+            [50, 0, 50, 100],
+            [0, 50, 100, 100]
+        ] 
+ 
+        const arrNumStates = [
+            [1,1,1,0,1,1,1],
+            [0,0,1,0,0,1,0],
+            [1,0,1,1,1,0,1],
+            [1,0,1,1,0,1,1],
+            [0,1,1,1,0,1,0],
+            [1,1,0,1,0,1,1],
+            [0,1,0,1,1,1,1],
+            [1,0,1,0,0,1,0],
+            [1,1,1,1,1,1,1],
+            [1,1,1,1,0,1,0]
+        ]
+
+        function drawNumber(idx, ctx, num) {
+            for (x=0; x<7; x++) {
+                let startX = arrNumStartX[idx] + arrLines[x][0];
+                let endX = startX + arrLines[x][1];
+                let startY = baseY + arrLines[x][2];
+                let endY = baseY + arrLines[x][3];
+
+                ctx.strokeStyle = (arrNumStates[num][x]) == 1 ? 'yellow' : "black";
+                
+                ctx.beginPath();
+
+                ctx.moveTo(startX, startY);
+                ctx.lineTo(endX, endY);
+
+                //ctx.closePath();
+                ctx.stroke();
+            }
+        }
+
+        function getRandomInt() {
+            return Math.floor(Math.random() * 9);
+        }
+
+        function init() {
+            canvas = document.getElementById("canvas");
+            canvas.width = window.innerWidth /2;
+            canvas.height = window.innerHeight /2;
+            context = canvas.getContext("2d");
+            context.lineWidth = 8
+            context.lineCap = "round";
+
+            drawNumber(0, context, getRandomInt())
+            drawNumber(1, context, getRandomInt())
+            drawNumber(2, context, getRandomInt())
+            drawNumber(3, context, getRandomInt())
+        }
+
+        document.addEventListener('DOMContentLoaded', init)
+    </script>
+ 
+</body>
+</html>
