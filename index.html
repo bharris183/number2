@@ -38,6 +38,13 @@
             [1,1,1,1,0,1,0]
         ]
 
+        function Number(decimal, arrState) {
+            this.decimal = decimal;
+            this.state = arrState;
+        }
+
+        let arrNumbers = [];
+
         function drawNumber(idx, ctx, num) {
             for (x=0; x<7; x++) {
                 let startX = arrNumStartX[idx] + arrLines[x][0];
@@ -55,6 +62,7 @@
                 //ctx.closePath();
                 ctx.stroke();
             }
+            arrNumbers.push(new Number(num, arrNumStates[num]));
         }
 
         function getRandomInt() {
@@ -73,6 +81,8 @@
             drawNumber(1, context, getRandomInt())
             drawNumber(2, context, getRandomInt())
             drawNumber(3, context, getRandomInt())
+
+            console.log(arrNumbers[0].decimal);
         }
 
         document.addEventListener('DOMContentLoaded', init)
